@@ -28,8 +28,6 @@ app.post("/api/shorturl", function(req, res) {
   let url = req.body.url;
   
   dns.lookup(urlparser.parse(url).hostname, async(err, address) => {
-    console.log(address);
-
     if(address) {
       const url_count = await urls.countDocuments({});
       const urlDoc = {
