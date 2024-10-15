@@ -28,11 +28,9 @@ app.post("/api/shorturl", function(req, res) {
   let url = req.body.url;
   
   dns.lookup(urlparser.parse(url).hostname, async(err, address) => {
-    if(err) {
-      res.json({
-        error: 'invalid url'
-      })
-    }else {
+    console.log(address);
+
+    if(address) {
       const url_count = await urls.countDocuments({});
       const urlDoc = {
         url: url,
@@ -44,6 +42,10 @@ app.post("/api/shorturl", function(req, res) {
       res.json({
         original_url: url,
         short_url: url_count
+      })
+    }else {
+      res.json({
+        error: 'invalid url'
       })
     }
   })
